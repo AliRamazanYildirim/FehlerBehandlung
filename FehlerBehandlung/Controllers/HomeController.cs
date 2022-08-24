@@ -1,4 +1,6 @@
 ﻿using FehlerBehandlung.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -23,13 +25,17 @@ namespace FehlerBehandlung.Controllers
 
         public IActionResult Privacy()
         {
+            throw new FileNotFoundException();
             return View();
         }
-
+        [AllowAnonymous]//Jeder kann auf die Seite zugreifen. 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var ausnahme = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            ViewBag.weg = ausnahme.Path;
+            ViewBag.nachricht = ausnahme.Error.Message;
+            return View();
         }
     }
 }

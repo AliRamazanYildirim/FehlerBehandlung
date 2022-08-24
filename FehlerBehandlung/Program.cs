@@ -11,10 +11,13 @@ if (!app.Environment.IsDevelopment())
     //Mit UseDeveloperExceptionPage können wir auch zusätzliche Fehler sehen.
     app.UseDeveloperExceptionPage();
 
-    app.UseExceptionHandler("/Home/Error");
+    
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+//Ich habe diese Fehlermeldung aus dem if-Blog entfernt, da ich möchte,
+//dass sie außerhalb der Entwicklungsumgebung ausgeführt wird.
+app.UseExceptionHandler("/Home/Error");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
