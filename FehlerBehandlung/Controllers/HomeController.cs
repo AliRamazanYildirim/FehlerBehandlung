@@ -15,6 +15,9 @@ namespace FehlerBehandlung.Controllers
 
         public IActionResult Index()
         {
+            int zahl1 = 7;
+            int zahl2 = 0;
+            int resultat = zahl1 / zahl2;
             return View();
         }
 
