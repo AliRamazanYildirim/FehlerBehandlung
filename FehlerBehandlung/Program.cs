@@ -1,8 +1,11 @@
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -10,6 +13,8 @@ if (!app.Environment.IsDevelopment())
 {
     //Mit UseDeveloperExceptionPage können wir auch zusätzliche Fehler sehen.
     app.UseDeveloperExceptionPage();
+
+    app.UseDatabaseErrorPage();
 
     //app.UseStatusCodePages("text/plain", "Es gibt Fehler. StatusCode:{0}");
 
@@ -20,13 +25,26 @@ if (!app.Environment.IsDevelopment())
             $"Es gibt Fehler. StatusCode:{statusCodeContext.HttpContext.Response.StatusCode}");
     });
 
+
+    
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 //Ich habe diese Fehlermeldung aus dem if-Blog entfernt, da ich möchte,
 //dass sie außerhalb der Entwicklungsumgebung ausgeführt wird.
-app.UseExceptionHandler("/Home/Error");
+
+//app.UseExceptionHandler("/Home/Error");
+
+app.UseExceptionHandler(context=>
+{
+    context.Run(async page =>
+    {
+        page.Response.StatusCode = 500;
+        page.Response.ContentType = "text/html";
+        await page.Response.WriteAsync($"<html><head></head><h1>Es gibt Fehler:{page.Response.StatusCode}</h1></html>");
+    });
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
