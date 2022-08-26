@@ -36,15 +36,15 @@ if (!app.Environment.IsDevelopment())
 
 //app.UseExceptionHandler("/Home/Error");
 
-app.UseExceptionHandler(context=>
-{
-    context.Run(async page =>
-    {
-        page.Response.StatusCode = 500;
-        page.Response.ContentType = "text/html";
-        await page.Response.WriteAsync($"<html><head></head><h1>Es gibt Fehler:{page.Response.StatusCode}</h1></html>");
-    });
-});
+//app.UseExceptionHandler(context =>
+//{
+//    context.Run(async page =>
+//    {
+//        page.Response.StatusCode = 500;
+//        page.Response.ContentType = "text/html";
+//        await page.Response.WriteAsync($"<html><head></head><h1>Es gibt Fehler:{page.Response.StatusCode}</h1></html>");
+//    });
+//});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

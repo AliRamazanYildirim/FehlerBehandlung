@@ -1,4 +1,5 @@
-﻿using FehlerBehandlung.Models;
+﻿using FehlerBehandlung.Filter;
+using FehlerBehandlung.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,7 @@ namespace FehlerBehandlung.Controllers
         {
             _logger = logger;
         }
-
+        [BenutzerdefiniertesHandleAusnahmeFilterAttribut(ErrorPage ="Fehler1")]
         public IActionResult Index()
         {
             int zahl1 = 7;
@@ -22,7 +23,7 @@ namespace FehlerBehandlung.Controllers
             int resultat = zahl1 / zahl2;
             return View();
         }
-
+        [BenutzerdefiniertesHandleAusnahmeFilterAttribut(ErrorPage ="Fehler")]
         public IActionResult Privacy()
         {
             throw new FileNotFoundException();
@@ -35,6 +36,16 @@ namespace FehlerBehandlung.Controllers
             var ausnahme = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
             ViewBag.weg = ausnahme.Path;
             ViewBag.nachricht = ausnahme.Error.Message;
+            return View();
+        }
+
+        public IActionResult Fehler()
+        {
+            return View();
+        }
+
+        public IActionResult Fehler1()
+        {
             return View();
         }
     }
