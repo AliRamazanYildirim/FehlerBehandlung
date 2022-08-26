@@ -15,7 +15,7 @@ namespace FehlerBehandlung.Controllers
         {
             _logger = logger;
         }
-        [BenutzerdefiniertesHandleAusnahmeFilterAttribut(ErrorPage ="Fehler1")]
+        
         public IActionResult Index()
         {
             int zahl1 = 7;
@@ -23,7 +23,7 @@ namespace FehlerBehandlung.Controllers
             int resultat = zahl1 / zahl2;
             return View();
         }
-        [BenutzerdefiniertesHandleAusnahmeFilterAttribut(ErrorPage ="Fehler")]
+        
         public IActionResult Privacy()
         {
             throw new FileNotFoundException();
